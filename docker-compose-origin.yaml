@@ -1,0 +1,24 @@
+---
+version: "3"
+
+services:
+  audirvana-origin:
+    build:
+      context: ./build
+      args:
+        - BINARY_TYPE=origin
+    container_name: audirvana-origin
+    privileged: true
+    network_mode: host
+    devices:
+      - /dev/snd:/dev/snd
+    environment:
+      - PUID=${PUID:-}
+      - PGID=${PGID:-}
+      - AUDIO_GID=${AUDIO_GID:-}
+      - ACCEPT_EULA=${ACCEPT_EULA}
+    volumes:
+      - /var/run/dbus:/var/run/dbus
+      - ${MUSIC_DIRECTORY:-./music}:/music:ro
+    restart: unless-stopped
+  

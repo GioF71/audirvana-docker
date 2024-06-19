@@ -1,0 +1,25 @@
+# this compose file requires the images to be build already
+# Build the images using build-origin.sh and/or build-studio.sh
+#
+# You will need to provide a value for BINARY_TYPE (studio or origin) 
+# and a correct value for ACCEPT_EULA
+
+---
+version: "3"
+
+services:
+  audirvana:
+    image: giof71/audirvana:${BINARY_TYPE}
+    privileged: true
+    network_mode: host
+    devices:
+      - /dev/snd:/dev/snd
+    environment:
+      - PUID=${PUID:-}
+      - PGID=${PGID:-}
+      - AUDIO_GID=${AUDIO_GID:-}
+      - ACCEPT_EULA=${ACCEPT_EULA}
+    volumes:
+      - /var/run/dbus:/var/run/dbus
+      - ${MUSIC_DIRECTORY:-./music}:/music:ro
+    restart: unless-stopped
