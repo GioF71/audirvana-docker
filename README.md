@@ -43,7 +43,7 @@ Tune the content of the `.env` file according to the previous table and to the i
 
 ### Run
 
-After you have build the image you want to run, simply run the application using the following:
+After you have built the image you want to run, and created you configuration, simply run the application using the following:
 
 `docker-compose up -d`
 
