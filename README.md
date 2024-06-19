@@ -8,7 +8,7 @@ Please note that support goal is limited to cover running costs for subscription
 
 ## References
 
-This is a set of tools you can use in order to build and run docker image for Audirvana Studio and Audirvana Origin. See [here](https://audirvana.com/linux/) for references.  
+This is a set of tools you can use in order to build and run docker images for Audirvana Studio and Audirvana Origin. See [here](https://audirvana.com/linux/) for references.  
 
 ## Supported Platforms
 
