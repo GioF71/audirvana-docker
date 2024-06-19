@@ -12,7 +12,7 @@ This is a set of tools you can use in order to build and run docker image for Au
 
 ## Supported Platforms
 
-The Audirvana application can run on amd64 and on arm64 platforms.  
+The Audirvana applications can run on amd64 and on arm64 platforms.  
 
 ## Build
 
@@ -35,7 +35,7 @@ AUDIO_GID|The additional gid, should be set to the audio group id
 
 ### Configure
 
-Configure the application by copying the `sample.env` file to a `.env` file:
+Configure the application you want to run by copying the `sample.env` file to a `.env` file:
 
 `cp sample.env .env`
 
