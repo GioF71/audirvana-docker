@@ -8,6 +8,8 @@ if [[ -z "${BINARY_TYPE}" ]]; then
     exit 1
 fi
 
+config_dir=/config
+
 current_user=$(id -u)
 echo "Current user has uid=[$current_user]"
 RUNNING_USER_HOME_DIR=/root
@@ -27,12 +29,7 @@ if [[ $current_user -eq 0 ]]; then
         else
             echo "PGID=[${PGID}]"
         fi
-        #if [ -z "${AUDIO_GID}" ]; then
-        #    echo "AUDIO_GID is mandatory!"
-        #    exit 1
-        #else
         echo "AUDIO_GID=[${AUDIO_GID}]"
-        #fi
         DEFAULT_USER_NAME=audirvana-user
         DEFAULT_GROUP_NAME=audirvana-group
         DEFAULT_HOME_DIR=/home/$DEFAULT_USER_NAME
@@ -84,6 +81,7 @@ if [[ $current_user -eq 0 ]]; then
         echo "Successfully created user $USER_NAME:$GROUP_NAME [$PUID:$PGID])";
         chown -R $PUID:$PGID $HOME_DIR
         RUNNING_USER_HOME_DIR=$HOME_DIR
+        chown -R $PUID:$PGID $config_dir
     else
         echo "Container running as root, not creating any user."
     fi
@@ -94,15 +92,24 @@ fi
 
 if [[ "${ACCEPT_EULA^^}" == "Y" ]] || [[ "${ACCEPT_EULA^^}" == "YES" ]]; then
     echo "EULA Accepted."
-    config_path=$RUNNING_USER_HOME_DIR/.config/audirvana
-    mkdir -p $config_path
+    config_container_dir=$RUNNING_USER_HOME_DIR/.config
+    mkdir -p $config_container_dir
+    if [ -L "$config_container_dir/audirvana" ] || [ -f "$config_container_dir/audirvana" ]; then
+        echo "Deleting file/symlink [$config_container_dir/audirvana]"
+        rm "$config_container_dir/audirvana"
+    elif [ -d "$config_container_dir/audirvana" ]; then
+        echo "Deleting directory [$config_container_dir/audirvana]"
+        rm -Rf "$config_container_dir/audirvana"
+    fi
+    ln -s $config_dir $config_container_dir/audirvana
+    config_path=$config_container_dir/audirvana
     config_file=$config_path/audirvana-${BINARY_TYPE}.ini
     if [ ! -f "$config_file" ]; then
         echo "EulaAccepted = 1" > $config_file
+        cat $config_file
     else
-        echo "Configuration file [$config_file] already exists, will not be modified."
+        echo "Configuration file [$config_file] already exists."
     fi
-    cat $config_file
 else
     echo "EULA NOT Accepted!"
     exit 1

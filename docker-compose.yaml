@@ -1,4 +1,4 @@
-# this compose file requires the images to be build already
+# this compose file requires the images to be built already
 # Build the images using build-origin.sh and/or build-studio.sh
 #
 # You will need to provide a value for BINARY_TYPE (studio or origin) 
@@ -6,6 +6,9 @@
 
 ---
 version: "3"
+
+volumes:
+  config:
 
 services:
   audirvana:
@@ -20,6 +23,7 @@ services:
       - AUDIO_GID=${AUDIO_GID:-}
       - ACCEPT_EULA=${ACCEPT_EULA}
     volumes:
+      - config:/config
       - /var/run/dbus:/var/run/dbus
       - ${MUSIC_DIRECTORY:-./music}:/music:ro
     restart: unless-stopped

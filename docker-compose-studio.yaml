@@ -1,6 +1,9 @@
 ---
 version: "3"
 
+volumes:
+  config:
+
 services:
   audirvana-studio:
     build:
@@ -18,6 +21,7 @@ services:
       - AUDIO_GID=${AUDIO_GID:-}
       - ACCEPT_EULA=${ACCEPT_EULA}
     volumes:
+      - config:/config
       - /var/run/dbus:/var/run/dbus
       - ${MUSIC_DIRECTORY:-./music}:/music:ro
     restart: unless-stopped

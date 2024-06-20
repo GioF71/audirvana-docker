@@ -31,4 +31,6 @@ RUN chmod 755 /app/bin/run.sh
 
 ENV ACCEPT_EULA ""
 
+VOLUME /config
+
 ENTRYPOINT ["/app/bin/run.sh"]
