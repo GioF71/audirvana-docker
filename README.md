@@ -68,3 +68,8 @@ Build and start the Studio version of the application using the following comman
 `docker-compose -f origin.yaml up --build -d`
 
 Please note that this might trigger an image (re)build, if needed.
+
+### Renderer
+
+You can easily add a player on mostly any device with audio capabilities using [this example](https://github.com/GioF71/audio-tools/tree/main/players/audirvana-upnp) using my images for [mpd](https://github.com/GioF71/mpd-alsa-docker), [upmpdcli](https://github.com/GioF71/upmpdcli-docker) and [yams](https://github.com/GioF71/yams-docker).  
+Credit to the underlying projects can be found on the documentation of each project.
