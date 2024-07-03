@@ -22,7 +22,7 @@ Docker must be installed on your system. Refer to your linux distribution docume
 
 #### Install Docker on Debian/Ubuntu
 
-Docker is a prerequisite. On debian and derived distributions (this includes Raspberry Pi OS, DietPi, Moode Audio, Volumio), we can install the necessary packages using the following commands:
+On debian and derived distributions (this includes Raspberry Pi OS, DietPi, Moode Audio, Volumio), we can install the necessary packages using the following commands:
 
 ```text
 sudo apt-get update
