@@ -1,6 +1,6 @@
 # audirvana-docker
 
-## Support
+## Support me
 
 [![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/H2H7UIN5D)  
 Please see the [Goal](https://ko-fi.com/giof71/goal?g=0)  
@@ -14,6 +14,26 @@ This is a set of tools you can use in order to build and run docker images for A
 
 The Audirvana applications can run on amd64 and on arm64 platforms.  
 
+## Prerequisites
+
+### Docker
+
+Docker must be installed on your system. Refer to your linux distribution documentation. For debian/ubuntu, you can refer to the next section.  
+
+#### Install Docker on Debian/Ubuntu
+
+Docker is a prerequisite. On debian and derived distributions (this includes Raspberry Pi OS, DietPi, Moode Audio, Volumio), we can install the necessary packages using the following commands:
+
+```text
+sudo apt-get update
+sudo apt-get install docker.io docker-compose
+sudo usermod -a -G docker $USER
+```
+
+The last command adds the current user to the docker group. This is not mandatory; if you choose to skip this step, you might need to execute docker-compose commands by prepending `sudo`.  
+Please note that this method uses the docker packages available on the distro repositories.  
+If you want to install more up-to-date versions, refer to the guides [here](https://docs.docker.com/desktop/install/linux-install/)
+
 ## Build
 
 You can build your own images using the convenience scripts available in the root directory of this repository, `build-origin.sh` and `build-studio.sh`.  
@@ -23,15 +43,46 @@ Also, the resulting images could have been uploaded to docker hub, because they 
 
 ## Usage
 
-### Environment Variable
+### Environment Variables
 
 VARIABLE|DESCRIPTION
 :---|:---
 ACCEPT_EULA|You MUST set this to `Y` or `YES`, case insensitive
 BINARY_TYPE|Set it to either `studio` or `origin`
-PUID|The uid for the user you want to run the application
-PGID|The gid for the user you want to run the application
-AUDIO_GID|The additional gid, should be set to the audio group id
+PUID|The uid for the user you want to run the application, see [User and Group ids](#user-and-group-ids)
+PGID|The gid for the user you want to run the application, see [User and Group ids](#user-and-group-ids)
+AUDIO_GID|The additional gid, should be set to the audio group id, see [User and Group ids](#user-and-group-ids)
+MUSIC_DIRECTORY|The path to be mounted as `/music`, defaults to `./music`
+
+### User and Group ids
+
+Get the current user uid and gid by opening a terminal and entering:
+
+```text
+id
+```
+
+This should return something like:
+
+```text
+uid=1000(giovanni) gid=1000(giovanni) groups=1000(giovanni),995(audio)
+```
+
+Now you have your uid which is 1000, the gid which is also 1000, and the audio group id which in my case is 995.  
+Your user might not be in the audio group (albeit this is unlikely in a desktop system), in this case you can obtain the group id using the following:
+
+```text
+getent group audio
+```
+
+Again in my case, this would return:
+
+```text
+audio:x:995:giovanni,mpd
+```
+
+If the previous command does not return anything, the alsa libraries might not be installed correctly. Refer to your distro documentation to understand how to install alsa.  
+Please note that I removed all the additional groups just to make things hopefully more readable.
 
 ### Configure
 
@@ -57,7 +108,7 @@ You can watch the logs using:
 
 Build and start the Studio version of the application using the following command:
 
-`docker-compose -f studio.yaml up --build -d`
+`docker-compose -f docker-compose-studio.yaml up --build -d`
 
 Please note that this might trigger an image (re)build, if needed.
 
@@ -65,7 +116,7 @@ Please note that this might trigger an image (re)build, if needed.
 
 Build and start the Studio version of the application using the following command:
 
-`docker-compose -f origin.yaml up --build -d`
+`docker-compose -f docker-compose-origin.yaml up --build -d`
 
 Please note that this might trigger an image (re)build, if needed.
 

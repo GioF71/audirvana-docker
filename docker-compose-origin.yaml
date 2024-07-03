@@ -2,7 +2,7 @@
 version: "3"
 
 volumes:
-  config:
+  origin-config:
 
 services:
   audirvana-origin:
@@ -21,7 +21,7 @@ services:
       - AUDIO_GID=${AUDIO_GID:-}
       - ACCEPT_EULA=${ACCEPT_EULA}
     volumes:
-      - config:/config
+      - origin-config:/config
       - /var/run/dbus:/var/run/dbus
       - ${MUSIC_DIRECTORY:-./music}:/music:ro
     restart: unless-stopped
