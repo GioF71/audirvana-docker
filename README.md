@@ -13,6 +13,7 @@ This is a set of tools you can use in order to build and run docker images for A
 ## Supported Platforms
 
 The Audirvana applications can run on amd64 and on arm64 platforms.  
+This include Raspberry Pi SBC with a 64 bit version of Raspberry Pi OS.
 
 ## Prerequisites
 
@@ -37,6 +38,19 @@ If you want to install more up-to-date versions, refer to the guides [here](http
 ## Build
 
 You can build your own images using the convenience scripts available in the root directory of this repository, `build-origin.sh` and `build-studio.sh`.  
+From a terminal, you will need to enter one of the following, depending of the version of Audirvana you want to build:
+
+```text
+./build-origin.sh
+```
+
+or
+
+```text
+./build-studio.sh
+```
+
+You might want to append `--no-cache` to these commands in order to force rebuild without caching.  
 I will not provide pre-built images, in order to avoid to include proprietary binaries.  
 Initially, I tried installing the binaries at container startup time, but then abandoned that road. It worked, but the delay in the startup phase was a bit too long for my taste.  
 Also, the resulting images could have been uploaded to docker hub, because they would not contain any binaries, but I believe that these would have provided very little advantage compared to the current solution.  
@@ -123,4 +137,4 @@ Please note that this might trigger an image (re)build, if needed.
 ### Renderer
 
 You can easily add a player on mostly any device with audio capabilities using [this example](https://github.com/GioF71/audio-tools/tree/main/players/audirvana-upnp) using my images for [mpd](https://github.com/GioF71/mpd-alsa-docker), [upmpdcli](https://github.com/GioF71/upmpdcli-docker) and [yams](https://github.com/GioF71/yams-docker).  
-Credit to the underlying projects can be found on the documentation of each project.
+Credit to the individual underlying projects can be found on the documentation of each repository.
