@@ -133,6 +133,8 @@ Again in my case, this would return:
 audio:x:995:giovanni,mpd
 ```
 
+Please note the adding the audio group is needed only if you want to use the device's built-in audio capabilities. If you plan the device to just be a server for other UPnP players, the step is not required.  
+
 If the previous command does not return anything, the alsa libraries might not be installed correctly. Refer to your distro documentation to understand how to install alsa.  
 Please note that I removed all the additional groups just to make things hopefully more readable.
 
