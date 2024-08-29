@@ -42,18 +42,49 @@ The last command adds the current user to the docker group. This is not mandator
 Please note that this method uses the docker packages available on the distro repositories.  
 If you want to install more up-to-date versions, refer to the guides [here](https://docs.docker.com/desktop/install/linux-install/)
 
+### Clone the repository
+
+You need to clone the repository. Make sure that `git` is installed using the following command on debian and derived distributions (again, this includes Raspberry Pi OS, DietPi, Moode Audio, Volumio):
+
+```code
+sudo apt-get update
+sudo apt-get install -y git
+```
+
+Move to the your home directory and clone the repository using the commands:
+
+```code
+cd
+git clone https://github.com/GioF71/audirvana-docker.git
+```
+
+The rest of the documentation will assume that you have cloned the repository in the suggested directory. If you operated differently, be sure to check and modify the commands appropriately.  
+
+### Update the repository
+
+If you just downloaded the repository, you can skip this step.  
+If you previously cloned the repository, it might have been updated in the meantime. Move to the directory and pull the changes:
+
+```code
+cd $HOME/audirvana-docker
+git config pull.rebase false
+git pull
+```
+
 ## Build
 
 You can build your own images using the convenience scripts available in the root directory of this repository, `build-origin.sh` and `build-studio.sh`.  
 From a terminal, you will need to enter one of the following, depending of the version of Audirvana you want to build:
 
 ```text
+cd $HOME/audirvana-docker
 ./build-origin.sh
 ```
 
 or
 
 ```text
+cd $HOME/audirvana-docker
 ./build-studio.sh
 ```
 
@@ -109,7 +140,9 @@ Please note that I removed all the additional groups just to make things hopeful
 
 Configure the application you want to run by copying the `sample.env` file to a `.env` file:
 
-`cp sample.env .env`
+```text
+cp $HOME/audirvana-docker/sample.env $HOME/audirvana-docker/.env
+```
 
 Tune the content of the `.env` file according to the previous table and to the information provided in the `sample.env` file.  
 
@@ -117,11 +150,17 @@ Tune the content of the `.env` file according to the previous table and to the i
 
 After you have built the image you want to run, and created you configuration, simply run the application using the following:
 
-`docker-compose up -d`
+```text
+cd $HOME/audirvana-docker
+docker-compose up -d
+```
 
 You can watch the logs using:
 
-`docker-compose logs -f`
+```text
+cd $HOME/audirvana-docker
+docker-compose logs -f
+```
 
 ### (A bit more) Advanced
 
@@ -129,7 +168,10 @@ You can watch the logs using:
 
 Build and start the Studio version of the application using the following command:
 
-`docker-compose -f docker-compose-studio.yaml up --build -d`
+```text
+cd $HOME/audirvana-docker
+docker-compose -f docker-compose-studio.yaml up --build -d
+```
 
 Please note that this might trigger an image (re)build, if needed.
 
@@ -137,9 +179,12 @@ Please note that this might trigger an image (re)build, if needed.
 
 Build and start the Studio version of the application using the following command:
 
-`docker-compose -f docker-compose-origin.yaml up --build -d`
+```text
+cd $HOME/audirvana-docker
+docker-compose -f docker-compose-origin.yaml up --build -d
+```
 
-Please note that this might trigger an image (re)build, if needed.
+Please note that this might trigger an image (re)build, if needed.  
 
 ### Renderer
 
