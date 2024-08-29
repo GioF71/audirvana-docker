@@ -13,7 +13,14 @@ This is a set of tools you can use in order to build and run docker images for A
 ## Supported Platforms
 
 The Audirvana applications can run on amd64 and on arm64 platforms.  
-This include Raspberry Pi SBC with a 64 bit version of Raspberry Pi OS.
+This includes Raspberry Pi SBC with a 64 bit version of Raspberry Pi OS.
+
+## Disclaimer
+
+I won't build and publish images which would include binaries from the Audirvana company.  
+This means that there are no releated images available on docker hub. You will have to build your image yourself.  
+The images resulting from applying the build recipe described in this repository will include the latest studio/origin binaries.  
+When a new release is published, you will need to re-build your image, so that it will include the latest available version.  
 
 ## Prerequisites
 
